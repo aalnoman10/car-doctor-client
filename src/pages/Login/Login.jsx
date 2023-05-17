@@ -1,22 +1,27 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
+import { useNavigate } from 'react-router-dom';
+import SocailLogin from './SocailLogin';
 
 const Login = () => {
 
     const { signIn } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/'
 
     const handleLogin = event => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(name, email, password)
+
         signIn(email, password)
-            .then(result => {
-                const user = result.user;
-                console.log(user);
+            .then(() => {
+                navigate(from, { replace: true })
             })
             .catch(error => console.log(error));
     }
@@ -52,6 +57,7 @@ const Login = () => {
                         </form>
                         <p className='my-4 text-center'>New to Car Doctors <Link className='text-orange-600 font-bold' to="/signup">Sign Up</Link> </p>
                     </div>
+                    <SocailLogin></SocailLogin>
                 </div>
             </div>
         </div>

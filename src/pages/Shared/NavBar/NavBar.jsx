@@ -17,8 +17,13 @@ const NavBar = () => {
     const navItems = <>
         <li><Link to="/">Home</Link> </li>
         <li> <Link to="/about">About</Link> </li>
-        <li>{!user ? <Link to="/login">Login</Link> :
-            <button onClick={LogOut}>LogOut</button>} </li>
+        {user ?
+            <>
+                <li> <Link to="/bookings">Bookings</Link> </li>
+                <li><button onClick={LogOut}>LogOut</button></li>
+            </> :
+            <li><Link to="/login">Login</Link></li>
+        }
     </>
     return (
         <div className="navbar bg-base-100 h-28 mb-4">
